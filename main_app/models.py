@@ -23,7 +23,7 @@ class Car(models.Model):
         return reverse('detail', kwargs={'car_id': self.id})
 
 class Service(models.Model):
-    date = models.DateField()
+    date = models.DateField('service date')
     service = models.CharField(
         max_length=1,
     # add the 'choices' field option
