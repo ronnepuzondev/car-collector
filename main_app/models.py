@@ -22,7 +22,7 @@ class Car(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'car_id': self.id})
 
-class Service(models.Model):
+class Maintenance(models.Model):
     date = models.DateField('service date')
     service = models.CharField(
         max_length=1,
@@ -35,4 +35,7 @@ class Service(models.Model):
 
     def __str__(self):
     # Nice method for obtaining the friendly value of a Field.choice
-        return f"{self.get_service_display()} on {self.date}"
+        return f"{self.get_maintenance_display()} on {self.date}"
+
+    class Meta:
+        ordering = ['-date']

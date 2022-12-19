@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Service
+from .models import Maintenance
 
-class ServiceForm(ModelForm):
+class MaintenanceForm(ModelForm):
   class Meta:
-    model = Service
+    model = Maintenance
     fields = ['date', 'service']

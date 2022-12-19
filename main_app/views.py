@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Car
-from .forms import ServiceForm
+from .forms import MaintenanceForm
 
 # Add the following import
 from django.http import HttpResponse
@@ -21,19 +21,19 @@ def cars_index(request):
 
 def cars_detail(request, car_id):
   car = Car.objects.get(id=car_id)
-  service_form = ServiceForm()
-  return render(request, 'cars/detail.html', { 'car': car, 'service_form': service_form })
+  maintenance_form = MaintenanceForm()
+  return render(request, 'cars/detail.html', { 'car': car, 'maintenance_form': maintenance_form })
 
-def add_service(request, car_id):
+def add_maintenance(request, car_id):
   # create a ModelForm instance using the data in request.POST
-  form = ServiceForm(request.POST)
+  form = MaintenanceForm(request.POST)
   # validate the form
   if form.is_valid():
     # don't save the form to the db until it
     # has the cat_id assigned
-    new_service = form.save(commit=False)
-    new_service.car_id = car_id
-    new_service.save()
+    new_maintenance = form.save(commit=False)
+    new_maintenance.car_id = car_id
+    new_maintenance.save()
   return redirect('detail', car_id=car_id)
 
 class CarCreate(CreateView):

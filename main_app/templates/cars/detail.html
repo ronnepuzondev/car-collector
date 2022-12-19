@@ -23,20 +23,20 @@
 </div>
 </div>
 <div class="col s6">
-  <form action="{% url 'add_service' car.id %}" method="POST">
+  <form action="{% url 'add_maintenance' car.id %}" method="POST">
     {% csrf_token %}
-    {{ service_form.as_p }}
-    <input type="submit" class="btn" value="Add Service">
+    {{ maintenance_form.as_p }}
+    <input type="submit" class="btn" value="Add Maintenance">
   </form>
 <table class="striped">
   <thead>
-    <tr><th>Date</th><th>Service</th></tr>
+    <tr><th>Date</th><th>Maintenance</th></tr>
   </thead>
   <tbody>
-    {% for service in car.service_set.all %}
+    {% for maintenance in car.maintenance_set.all %}
       <tr>
-        <td>{{service.date}}</td>
-        <td>{{service.service_display}}</td>
+        <td>{{maintenance.date}}</td>
+        <td>{{maintenance.get_service_display}}</td>
       </tr>
     {% endfor %}
   </tbody>
