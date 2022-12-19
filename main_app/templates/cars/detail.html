@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Car Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ car.name }}</span>
+    <p>Model: {{ car.model }}</p>
+    <p>Description: {{ car.description }}</p>
+    {% if car.age > 0 %}
+      <p>Age: {{ car.age }}</p>
+    {% else %}
+      <p>Age: Baby Car</p>
+    {% endif %}
+  </div>
+  <div class="card-action">
+    <a href="{% url 'cars_update' car.id %}">Edit</a>
+    <a href="{% url 'cars_delete' car.id %}">Delete</a>
+  </div>
+</div>
+
+{% endblock %}
