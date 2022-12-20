@@ -10,18 +10,6 @@ SERVICE = (
     ('R', 'Repair')
 )
 
-class Car(models.Model):
-    name = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-    description = models.TextField(max_length=250)
-    age = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('detail', kwargs={'car_id': self.id})
-
 class Accessory(models.Model):
   name = models.CharField(max_length=50)
   description = models.TextField(max_length=250)
@@ -32,6 +20,20 @@ class Accessory(models.Model):
 
   def get_absolute_url(self):
     return reverse('accessories_detail', kwargs={'pk': self.id})
+
+class Car(models.Model):
+    name = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    description = models.TextField(max_length=250)
+    age = models.IntegerField()
+    accessories = models.ManyToManyField(Accessory)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'car_id': self.id})
+
 
 class Maintenance(models.Model):
     date = models.DateField('service date')

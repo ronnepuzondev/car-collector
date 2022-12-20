@@ -1,78 +1,105 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Car Details</h1>
 
 <div class="row">
-<div class="col s6">
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ car.name }}</span>
-    <p>Model: {{ car.model }}</p>
-    <p>Description: {{ car.description }}</p>
-    {% if car.age > 0 %}
-      <p>Age: {{ car.age }}</p>
-    {% else %}
-      <p>Age: Baby Car</p>
-    {% endif %}
-  </div>
-  <div class="card-action">
-    <a href="{% url 'cars_update' car.id %}">Edit</a>
-    <a href="{% url 'cars_delete' car.id %}">Delete</a>
-  </div>
-</div>
-</div>
-<div class="col s6">
-  <form action="{% url 'add_maintenance' car.id %}" method="POST">
-    {% csrf_token %}
-    {{ maintenance_form.as_p }}
-    <input type="submit" class="btn" value="Add Maintenance">
-  </form>
-<table class="striped">
-  <thead>
-    <tr><th>Date</th><th>Maintenance</th></tr>
-  </thead>
-  <tbody>
-    {% for maintenance in car.maintenance_set.all %}
-      <tr>
-        <td>{{maintenance.date}}</td>
-        <td>{{maintenance.get_service_display}}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-</div>
-
-{% comment %} need to check if accessories or accessorys  {% endcomment %}
-<hr>
-<div class="row">
   <div class="col s6">
-    <h3>{{ car.name }}'s Accessories</h3>
-    {% if car.accessories.count %}
-      {% for accessory in car.accessories.all %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              <p>{{ accessory.name }} </p>
-            </span>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <h5>No Accessories :(</h5>
-    {% endif %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ car.name }}</span>
+        <p>Model: {{ car.model }}</p>
+        <p>Description: {{ car.description }}</p>
+        {% if car.age > 0 %}
+        <p>Age: {{ car.age }}</p>
+        {% else %}
+        <p>Age: Baby Car</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'cars_update' car.id %}">Edit</a>
+        <a href="{% url 'cars_delete' car.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_maintenance' car.id %}" method="POST">
+      {% csrf_token %} {{ maintenance_form.as_p }}
+      <input type="submit" class="btn" value="Add Maintenance" />
+    </form>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Maintenance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for maintenance in car.maintenance_set.all %}
+        <tr>
+          <td>{{maintenance.date}}</td>
+          <td>{{maintenance.get_service_display}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
+  {% comment %} need to check if accessories or accessories {% endcomment %}
+  <hr />
+  <div class="row">
+    <div class="col s6">
+      <h3>{{ car.name }}'s Accessories</h3>
+      {% if car.accessories.count %} {% for accessory in car.accessories.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            <p>{{ accessory.name }}</p>
+          </span>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <h5>No Accessories :(</h5>
+      {% endif %}
+    </div>
+
+    <div class="col s6">
+      <h3>Available Toys</h3>
+      {% if accessories.count %} {% for accessory in accessories.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            A
+            <span style="color: {{ accessory.color }}"
+              >{{ accessory.color }}</span
+            >
+            {{ accessory.name }}
+          </span>
+        </div>
+        <div class="card-action">
+          <form
+            action="{% url 'assoc_accessory' car.id accessory.id %}"
+            method="POST"
+          >
+            {% csrf_token %}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <h5>{{car.name}} Already Has All accessories Available</h5>
+      {% endif %}
+    </div>
+  </div>
+  <script>
+    const dateEl = document.getElementById("id_date");
+    M.Datepicker.init(dateEl, {
+      format: "yyyy-mm-dd",
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true,
+    });
+    const selectEl = document.getElementById("id_service");
+    M.FormSelect.init(selectEl);
+  </script>
+  {% endblock %}
 </div>
-<script>
-  const dateEl = document.getElementById('id_date');
-  M.Datepicker.init(dateEl, {
-    format: 'yyyy-mm-dd',
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoClose: true
-  });
-  const selectEl = document.getElementById('id_service');
-  M.FormSelect.init(selectEl);
-</script>
-{% endblock %}
