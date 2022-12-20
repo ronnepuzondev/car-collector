@@ -2,7 +2,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: pink;
+  background-color: whitesmoke;
 }
 
 main {
@@ -13,3 +13,4 @@ footer.page-footer {
   padding-top: 0;
   text-align: center;
 }
+

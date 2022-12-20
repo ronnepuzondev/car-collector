@@ -6,7 +6,7 @@
 {% for accessory in accessory_list %}
   <a href="{% url 'accessories_detail' accessory.id %}">
     <div class="card">
-        <div class="card-content">
+        <div class="card-content black-text">
             <span class="card-title">{{ accessory.name }}</span>
             <p>Description: {{ accessory.description }}</p>
             <p>Price: {{ accessory.price }}</p>
