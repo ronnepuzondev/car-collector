@@ -22,6 +22,17 @@ class Car(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'car_id': self.id})
 
+class Accessory(models.Model):
+  name = models.CharField(max_length=50)
+  description = models.TextField(max_length=250)
+  price = models.IntegerField()
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('accessories_detail', kwargs={'pk': self.id})
+
 class Maintenance(models.Model):
     date = models.DateField('service date')
     service = models.CharField(
